@@ -1,12 +1,15 @@
 package com.enspd.release.models;
 
 import java.util.Date;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.Data;
 
 /***Table Playlists** :
    - ID_playlist (clé primaire)
@@ -16,6 +19,7 @@ import jakarta.persistence.Id;
  */
 
  @Entity(name = "playlist_table")
+ @Data
 public class PlaylistEntity {
 
     @Id
@@ -31,4 +35,6 @@ public class PlaylistEntity {
     @Column(name="date_creation_playlist")
     private Date date_creation;
     
+    @OneToMany(mappedBy = "playlists")
+    Set<ContenuPlaylistEntity> contenus_playlists;
 }
