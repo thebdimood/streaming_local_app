@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.enspd.release.DTO.AccountCreationRequestDTO;
 import com.enspd.release.DTO.AccountDeleteDTO;
@@ -14,6 +15,7 @@ import com.enspd.release.DTO.PasswordChangeorUpdate;
 import com.enspd.release.Repositories.AccountRepository;
 import com.enspd.release.models.AccountEntity;
 
+@Service
 public class AccountServiceImpl implements  AccountService {
 
 /* implementation du service de gestion des utilisateurs de la plateforme  */
