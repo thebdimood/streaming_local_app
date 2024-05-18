@@ -6,6 +6,7 @@ import com.enspd.release.models.AccountEntity;
 
 public interface AccountRepository extends JpaRepository<AccountEntity,Integer> {
 
+    AccountEntity findByName(String name);
 
     
 }

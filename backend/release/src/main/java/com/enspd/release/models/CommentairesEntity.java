@@ -2,8 +2,6 @@ package com.enspd.release.models;
 
 import java.util.Date;
 
-import org.hibernate.annotations.ManyToAny;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
