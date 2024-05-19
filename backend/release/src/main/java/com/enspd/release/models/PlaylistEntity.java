@@ -34,6 +34,12 @@ public class PlaylistEntity {
 
     @Column(name="date_creation_playlist")
     private Date date_creation;
+
+    @Column(name="nombres_de_like_playlist")
+    private Integer likes;
+
+    @Column(name="url_cover_playlist")
+    private String path_cover;
     
     @OneToMany(mappedBy = "playlists")
     Set<ContenuPlaylistEntity> contenus_playlists;

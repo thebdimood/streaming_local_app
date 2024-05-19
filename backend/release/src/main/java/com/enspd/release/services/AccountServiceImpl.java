@@ -105,7 +105,7 @@ public class AccountServiceImpl implements  AccountService {
                 accountRepository.save(accountEntity);
                 
             }
-        }
+        }else throw new RuntimeException();
     }
 
 /*

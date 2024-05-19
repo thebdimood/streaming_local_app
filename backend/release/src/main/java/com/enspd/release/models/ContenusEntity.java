@@ -27,6 +27,7 @@ public class ContenusEntity {
  */
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_contenu")
     private Integer Id;
 
     @Column(name= "titre_contenu", nullable = false)
@@ -49,6 +50,12 @@ public class ContenusEntity {
 
     @Column(name= "type_contenu")
     private String type_contenu;
+
+    @Column(name="auteur_contenu")
+    private String auteur;
+
+    @Column(name="path_cover")
+    private String cover_path;
 
     @Column(name= "duree_contenu")
     private String duree;
