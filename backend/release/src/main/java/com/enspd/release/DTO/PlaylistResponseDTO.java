@@ -8,13 +8,15 @@ import lombok.Data;
 @Data
 public class PlaylistResponseDTO {
 
-    private String id;
+    private Integer id;
 
     private String descrption;
 
     private Date date_creation;
 
     private String cover_path;
+    
+    private Integer likes;
 
     List<ContentResponseForPlaylistDTO> contenus;
 }

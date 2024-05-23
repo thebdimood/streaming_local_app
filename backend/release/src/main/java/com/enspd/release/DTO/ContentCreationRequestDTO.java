@@ -20,4 +20,8 @@ public class ContentCreationRequestDTO {
     private String auteur;
 
     private String duree;
+    
+    private String type_contenu;
+
+    private String cover_path;
 }

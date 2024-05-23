@@ -12,4 +12,8 @@ private String titre;
 private String description;
 
 private String auteur;
+
+private String langue;
+
+private String genre;
 }

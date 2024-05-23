@@ -17,7 +17,7 @@ public interface PlaylistRepository extends JpaRepository<PlaylistEntity,Integer
     @Query("SELECT p FROM playlist_table p ORDER BY p.likes  LIMIT 10")
     List<PlaylistEntity> findHotPlaylist();
 
-    @Query("SELECT p FROM playlis_table p ORDER BY p.date_creation LIMIT 10")
+    @Query("SELECT p FROM playlist_table p ORDER BY p.date_creation LIMIT 10")
     List<PlaylistEntity> findNewPlaylist();
     
     

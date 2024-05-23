@@ -28,6 +28,6 @@ private Integer nb_de_flux;
 
 List<CommentaireResponseDTO> commentaires;
 
-private Integer id_playlist;
+private Integer id;
 
 }

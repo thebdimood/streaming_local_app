@@ -24,7 +24,7 @@ public interface ContentService {
 
   public CommentaireResponseDTO CreateComment(CommentaireCreationRequestDTO commentaireCreationRequestDTO);
 
-  public void DeleteCommentaire();
+  public void DeleteCommentaire(Integer id);
 
   /*
    * 
@@ -67,5 +67,9 @@ public interface ContentService {
   public void AddtoPlaylists(List<AddContentToPlaylistDTO> addContentToPlaylistDTOs);
 
   public void UpdateFluxContenu(Integer id);
+
+  public ContentResponseDTO getContentById(Integer id);
+
+  public List<ContentResponseDTO> getAllContentByType(String content_type);
 
 }
