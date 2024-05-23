@@ -17,6 +17,8 @@ import com.enspd.release.DTO.ContentUpdateRequestDTO;
 import com.enspd.release.DTO.PlaylistCreationRequestDTO;
 import com.enspd.release.DTO.PlaylistResponseDTO;
 import com.enspd.release.DTO.PlaylistUpdateRequestDTO;
+import com.enspd.release.Exceptions.PathUsedException;
+import com.enspd.release.Exceptions.RessourceNotFoundException;
 import com.enspd.release.Repositories.AccountRepository;
 import com.enspd.release.Repositories.CommentairesRepository;
 import com.enspd.release.Repositories.ContenuPlaylistRepository;
@@ -45,14 +47,17 @@ public class ContentServiceImpl implements ContentService {
 
     private AccountRepository accountRepository;
 
+    
+
     @Override
     public CommentaireResponseDTO CreateComment(CommentaireCreationRequestDTO commentaireCreationRequestDTO) {
 
         ContenusEntity contenusEntity = contenusRepository.findById(commentaireCreationRequestDTO.getId_contenu())
-                .orElseThrow();
+                .orElseThrow(
+                    ()-> new RessourceNotFoundException("le contenu avec l'identifiant "+commentaireCreationRequestDTO.getId_contenu()+" n'existe pas"));
 
         AccountEntity accountEntity = accountRepository.findById(commentaireCreationRequestDTO.getId_user())
-                .orElseThrow();
+                .orElseThrow(()-> new RessourceNotFoundException("le compte  avec l'identifiant "+commentaireCreationRequestDTO.getId_user()+" n'existe pas"));
 
         Date date = new Date(System.currentTimeMillis());
 
@@ -77,7 +82,8 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public void DeleteCommentaire(Integer id) {
        
-        CommentairesEntity commentairesEntity= commentairesRepository.findById(id).orElseThrow();
+        CommentairesEntity commentairesEntity= commentairesRepository.findById(id).orElseThrow(
+            ()-> new RessourceNotFoundException("le commentaire recherche n'existe pas "));
         commentairesRepository.delete(commentairesEntity);
     }
 
@@ -98,7 +104,8 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public void DeletePlaylist(Integer id) {
-        PlaylistEntity playlistEntity = playlistRepository.findById(id).orElseThrow();
+        PlaylistEntity playlistEntity = playlistRepository.findById(id).orElseThrow(
+            ()-> new RessourceNotFoundException("la playliste avec l'identifiant "+id+"n'existe pas"));
 
         List<ContenuPlaylistEntity> lPlaylistEntities = contenuPlaylistRepository
                 .ListOfContents(playlistEntity.getId());
@@ -111,7 +118,8 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public PlaylistResponseDTO updatePlaylistParam(PlaylistUpdateRequestDTO playlistUpdateRequestDTO) {
-        PlaylistEntity playlistEntity = playlistRepository.findById(playlistUpdateRequestDTO.getId()).orElseThrow();
+        PlaylistEntity playlistEntity = playlistRepository.findById(playlistUpdateRequestDTO.getId()).orElseThrow( 
+            ()-> new RessourceNotFoundException("la playliste avec l'identifiant "+playlistUpdateRequestDTO.getId()+"n'existe pas"));
         if (playlistUpdateRequestDTO.getCover_path() != null) {
 
             playlistEntity.setPath_cover(playlistUpdateRequestDTO.getCover_path());
@@ -231,12 +239,13 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public void AddLike(Integer id_playlist) {
-        PlaylistEntity playlistEntity = playlistRepository.findById(id_playlist).orElse(null);
+        PlaylistEntity playlistEntity = playlistRepository.findById(id_playlist).orElseThrow( 
+            ()-> new RessourceNotFoundException("la playliste avec l'identifiant "+id_playlist+"n'existe pas"));
 
-        if (playlistEntity != null) {
+     
             playlistEntity.setLikes(playlistEntity.getLikes() + 1);
             playlistRepository.save(playlistEntity);
-        }
+        
     }
 
     @Override
@@ -280,13 +289,15 @@ public class ContentServiceImpl implements ContentService {
             return contentResponseDTO;
 
         } else {
-            throw new RuntimeException("le path rechercche est deja utiliser par un autre fichier");
+            throw new PathUsedException("le fichier  est deja utiliser par un autre contenu  ");
         }
     }
 
     @Override
     public ContentResponseDTO UpdateContent(ContentUpdateRequestDTO contentUpdateRequestDTO) {
-        ContenusEntity contenusEntity = contenusRepository.findById(contentUpdateRequestDTO.getId()).orElseThrow();
+        ContenusEntity contenusEntity = contenusRepository.findById(contentUpdateRequestDTO.getId()).orElseThrow(
+            ()-> new RessourceNotFoundException("l'utilisateur avec l'identifiant "+contentUpdateRequestDTO.getId()+" n'existe pas")
+        );
 
         if (contentUpdateRequestDTO.getAuteur() != null) {
             contenusEntity.setAuteur(contentUpdateRequestDTO.getAuteur());
@@ -404,12 +415,10 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public void DeleteContent(Integer id) {
 
-        ContenusEntity contenusEntity = contenusRepository.findById(id).orElse(null);
-        if (contenusEntity != null) {
+        ContenusEntity contenusEntity = contenusRepository.findById(id).orElseThrow(
+            ()-> new RessourceNotFoundException("le contenu avec l'identifiant "+id+"n'existe pas"));
+        
             contenusRepository.delete(contenusEntity);
-        } else {
-            throw new RuntimeException("le fichier specfie nexiste pas");
-        }
     }
 
     @Override
@@ -423,10 +432,10 @@ public class ContentServiceImpl implements ContentService {
              * playlist
              */
             ContenusEntity contenusEntity = contenusRepository.findById(addContentToPlaylistDTO.getId_contenu())
-                    .orElseThrow();
+                    .orElseThrow(()-> new RessourceNotFoundException("le contenu avec l'identifiant "+addContentToPlaylistDTO.getId_contenu()+"n'existe pas"));
 
             PlaylistEntity playlistEntity = playlistRepository.findById(addContentToPlaylistDTO.getId_playlist())
-                    .orElseThrow();
+                    .orElseThrow(()-> new RessourceNotFoundException("le contenu avec l'identifiant "+addContentToPlaylistDTO.getId_playlist()+"n'existe pas"));
 
             List<ContenuPlaylistEntity> cPlaylistEntities = contenuPlaylistRepository
                     .ListOfContents(playlistEntity.getId());
@@ -451,14 +460,16 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public void UpdateFluxContenu(Integer id) {
-        ContenusEntity contenusEntity = contenusRepository.findById(id).orElseThrow();
+        ContenusEntity contenusEntity = contenusRepository.findById(id).orElseThrow(
+            ()-> new RessourceNotFoundException("le contenu avec l'identifiant "+id+"n'existe pas"));
         contenusEntity.setNbre_de_flux(contenusEntity.getNbre_de_flux() + 1);
         contenusRepository.save(contenusEntity);
     }
 
     @Override
     public ContentResponseDTO getContentById(Integer id) {
-        ContenusEntity contenusEntity = contenusRepository.findById(id).orElseThrow();
+        ContenusEntity contenusEntity = contenusRepository.findById(id).orElseThrow(
+            ()-> new RessourceNotFoundException("le contenu avec l'identifiant "+id+"n'existe pas"));
 
         List<CommentairesEntity> commentairesEntities = commentairesRepository.ListOfComments(id);
         List<CommentaireResponseDTO> commentaireResponseDTOs = new ArrayList<>();
