@@ -25,7 +25,7 @@ public class CommentairesEntity {
     private String texte;
 
 
-    @Column(name = "date_commentaire")
+    @Column(name = "date_commentaire",nullable = false)
     private Date  date;
     
     @ManyToOne

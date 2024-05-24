@@ -33,7 +33,7 @@ public class ContenusEntity {
     @Column(name= "titre_contenu", nullable = false)
     private String titre;
 
-    @Column(name= "name_contenu", nullable = false)
+    @Column(name= "description_contenu", nullable = false)
     private String description;
 
     @Column(name= "path_contenu", nullable = false)
@@ -48,16 +48,16 @@ public class ContenusEntity {
     @Column(name= "langue_contenu")
     private String langue;
 
-    @Column(name= "type_contenu")
+    @Column(name= "type_contenu",nullable = false)
     private String type_contenu;
 
-    @Column(name="auteur_contenu")
+    @Column(name="auteur_contenu",nullable = false)
     private String auteur;
 
     @Column(name="path_cover")
     private String cover_path;
 
-    @Column(name= "duree_contenu")
+    @Column(name= "duree_contenu",nullable = false)
     private String duree;
 
     @Column(name="nbre_de_flux_contenu")

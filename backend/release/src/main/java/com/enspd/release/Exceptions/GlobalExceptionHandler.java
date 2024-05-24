@@ -25,5 +25,33 @@ public class GlobalExceptionHandler {
 
         return errorResponse;
     }
+
+
+    @ExceptionHandler(value = PathUsedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public @ResponseBody ErrorResponse HandlePathUsedException(PathUsedException p){
+
+        ErrorResponse errorResponse= new ErrorResponse();
+
+        errorResponse.setDate(new Date(System.currentTimeMillis()));
+        errorResponse.setError(p.getMessage());
+        errorResponse.setStatus_Code(HttpStatus.NOT_FOUND.value());
+
+        return errorResponse;
+    }
+
+    @ExceptionHandler(value=NullArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorResponse HandleBadRequest(NullArgumentException n){
+        ErrorResponse errorResponse= new ErrorResponse();
+
+        errorResponse.setDate(new Date(System.currentTimeMillis()));
+        errorResponse.setError(n.getMessage());
+        errorResponse.setStatus_Code(HttpStatus.BAD_REQUEST.value());
+
+        return errorResponse;
+    }
+
+    
     
 }

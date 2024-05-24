@@ -26,13 +26,13 @@ public class PlaylistEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
-    @Column(name="nom_playlist")
+    @Column(name="nom_playlist",nullable = false)
     private String nom;
 
     @Column(name="description_playlist")
     private String description;
 
-    @Column(name="date_creation_playlist")
+    @Column(name="date_creation_playlist",nullable = false)
     private Date date_creation;
 
     @Column(name="nombres_de_like_playlist")
